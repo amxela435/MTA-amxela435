@@ -17,25 +17,22 @@
 
     <script>
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Развернуть окно на весь экран
-
-        // document.getElementById('pay-btn').addEventListener('click', () => {
-        //     // 1. Здесь вы обычно делаете запрос к своему серверу, чтобы создать ссылку на оплату
-        //     // 2. После успешной генерации ссылки - перенаправляем пользователя:
-        //     window.location.href = "https://ваш-сайт.рф/pay-link-123";
-        // });
-
-        document.getElementById('pay-btn').addEventListener('click', () => {
-            const stripeUrl = "https://buy.stripe.com/test_9B600d7KX9Rh1IScJc4ko00";
+        tg.ready();
+        tg.expand();
     
-            // Используем openLink, чтобы Telegram не блокировал переход на платежку
-            if (window.Telegram && window.Telegram.WebApp) {
-                window.Telegram.WebApp.openLink(stripeUrl);
-            } else {
-                window.location.href = stripeUrl;
-            }
-        });
-        
+        // Получаем реальный ID пользователя из Telegram
+        // Если открыто не в телеграме, будет "unknown"
+        const userId = tg.initDataUnsafe?.user?.id || "unknown";
+    
+        document.getElementById('pay-btn').onclick = () => {
+            // Формируем ссылку динамически, добавляя ID пользователя
+            const baseStripeUrl = "https://buy.stripe.com/test_9B600d7KX9Rh1IScJc4ko00";
+            const finalUrl = `${baseStripeUrl}?client_reference_id=${userId}`;
+            
+            console.log("Переход по ссылке для пользователя:", userId);
+            tg.openLink(finalUrl);
+        };
     </script>
+    
 </body>
 </html>
