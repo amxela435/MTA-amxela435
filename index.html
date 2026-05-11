@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 20px; }
+        button { background: #248bcf; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Оформление заказа</h2>
+    <p>Товар: Исследование рынка 2026</p>
+    <p>Цена: 1000 руб.</p>
+    
+    <!-- Кнопка, которая ведет на ваш эквайринг (например, ЮKassa или Stripe) -->
+    <button id="pay-btn">Оплатить картой</button>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Развернуть окно на весь экран
+
+        document.getElementById('pay-btn').addEventListener('click', () => {
+            // 1. Здесь вы обычно делаете запрос к своему серверу, чтобы создать ссылку на оплату
+            // 2. После успешной генерации ссылки - перенаправляем пользователя:
+            window.location.href = "https://ваш-сайт.рф/pay-link-123";
+        });
+    </script>
+</body>
+</html>
