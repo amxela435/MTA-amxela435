@@ -19,11 +19,23 @@
         const tg = window.Telegram.WebApp;
         tg.expand(); // Развернуть окно на весь экран
 
+        // document.getElementById('pay-btn').addEventListener('click', () => {
+        //     // 1. Здесь вы обычно делаете запрос к своему серверу, чтобы создать ссылку на оплату
+        //     // 2. После успешной генерации ссылки - перенаправляем пользователя:
+        //     window.location.href = "https://ваш-сайт.рф/pay-link-123";
+        // });
+
         document.getElementById('pay-btn').addEventListener('click', () => {
-            // 1. Здесь вы обычно делаете запрос к своему серверу, чтобы создать ссылку на оплату
-            // 2. После успешной генерации ссылки - перенаправляем пользователя:
-            window.location.href = "https://ваш-сайт.рф/pay-link-123";
+            const stripeUrl = "https://buy.stripe.com/test_9B600d7KX9Rh1IScJc4ko00";
+    
+            // Используем openLink, чтобы Telegram не блокировал переход на платежку
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.openLink(stripeUrl);
+            } else {
+                window.location.href = stripeUrl;
+            }
         });
+        
     </script>
 </body>
 </html>
